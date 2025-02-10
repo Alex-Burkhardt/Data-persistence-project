@@ -27,13 +27,10 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance;
     public List<Player> highScores = new List<Player>();
     private string savePath;
-    [SerializeField] private GameObject inputFieldObj;
-    private TMP_InputField inputField;
-    [SerializeField] private GameObject inputFieldClear;
-    private TMP_InputField clearInputField;
-
-    [SerializeField] private Button clearAllPath;
-    [SerializeField] private Button clearOnePath;
+    
+    public TMP_InputField inputField;
+    public TMP_InputField clearOneInputField;
+    public TMP_InputField clearAllInputField;
 
     public string newPlayerName;
 
@@ -50,26 +47,16 @@ public class ScoreManager : MonoBehaviour
         
         highScores = new List<Player>(){new Player("None",0), new Player("None",0), new Player("None",0)};
         
-        inputField = inputFieldObj.GetComponent<TMP_InputField>();
-        clearInputField = inputFieldClear.GetComponent<TMP_InputField>();
-        
         savePath = Application.persistentDataPath + "/High_Scores_Save.json";
-        
-        clearAllPath.onClick.AddListener(ClearAllPath);
-        clearOnePath.onClick.AddListener(ClearOnePath);
 
         DontDestroyOnLoad(gameObject);
 
         LoadData();
         
-        var shows = FindObjectsByType<FindScore>(FindObjectsSortMode.None);
-        foreach (var item in shows)
-        {
-            item.ShowText();
-        }
+        PlayersSort();
     }
 
-    // Update is called once per frame
+    
     public void SubmitPlayer()
     {
 
@@ -94,6 +81,7 @@ public class ScoreManager : MonoBehaviour
                     player.score = score;
                     highScores.Sort((a, b) => b.score.CompareTo(a.score));
                     SaveData();
+                    
                     return;
                 }
             }
@@ -131,26 +119,27 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    private void ClearAllPath()
+    public void ClearAllPath()
     {
+        if (clearAllInputField.text != "Delete")
+        {
+            return;
+        }
+        
         File.Delete(savePath);
 
         highScores = new List<Player>(){new Player("None",0), new Player("None",0), new Player("None",0)};
         
         SaveData();
 
-        var shows = FindObjectsByType<FindScore>(FindObjectsSortMode.None);
-        foreach (var item in shows)
-        {
-            item.ShowText();
-        }
+        PlayersSort();
 
         savePath = Application.persistentDataPath + "/High_Scores_Save.json";
     }
 
-    private void ClearOnePath()
+    public void ClearOnePath()
     {
-        if (clearInputField == null)
+        if (clearOneInputField == null)
         {
             print("Empty input.");
             return;
@@ -160,23 +149,27 @@ public class ScoreManager : MonoBehaviour
 
         foreach (var pl in highScores)
         {
-            if (clearInputField.text == pl.playerName)
+            if (clearOneInputField.text == pl.playerName)
             {
                 pl.playerName = "None";
                 pl.score = 0;
                 highScores.Sort((a, b) => b.score.CompareTo(a.score));
                 SaveData();
+                PlayersSort();
 
-                var shows = FindObjectsByType<FindScore>(FindObjectsSortMode.None);
-                foreach (var item in shows)
-                {
-                    item.ShowText();
-                }
-                
                 return;
             }
         }
 
         print("Name doesn't match.");
+    }
+
+    public void PlayersSort()
+    {
+        var shows = FindObjectsByType<FindScore>(FindObjectsSortMode.None);
+        foreach (var item in shows)
+        {
+            item.ShowText();
+        }
     }
 }

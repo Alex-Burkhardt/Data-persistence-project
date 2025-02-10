@@ -19,6 +19,8 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button mainMenuButton;
     
     // Start is called before the first frame update
     void Start()
@@ -39,6 +41,9 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        restartButton.onClick.AddListener(RestartGame);
+        mainMenuButton.onClick.AddListener(BackToMainMenu);
     }
 
     private void Update()
@@ -58,10 +63,7 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
+            restartButton.gameObject.SetActive(true);
         }
     }
 
@@ -76,5 +78,16 @@ public class MainManager : MonoBehaviour
         m_GameOver = true;
         GameOverText.SetActive(true);
         ScoreManager.Instance.UpdateList(m_Points);
+    }
+
+    void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void BackToMainMenu()
+    {
+        ScoreManager.Instance.UpdateList(m_Points);
+        SceneManager.LoadScene(0);
     }
 }

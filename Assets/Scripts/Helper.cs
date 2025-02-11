@@ -1,20 +1,16 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class Helper : MonoBehaviour
 {
-    
     public Button playButton;
-    public Button clearAllPath;
-    public Button clearOnePath;
+    public Button clearOnePath, clearAllPath;
 
     [SerializeField] private GameObject IFObject;
     [SerializeField] private GameObject IFClearOneObject;
     [SerializeField] private GameObject IFClearAllObject;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playButton.onClick.AddListener(ScoreManager.Instance.SubmitPlayer);
@@ -25,13 +21,5 @@ public class Helper : MonoBehaviour
 
         clearOnePath.onClick.AddListener(ScoreManager.Instance.ClearOnePath);
         ScoreManager.Instance.clearOneInputField = IFClearOneObject.GetComponent<TMP_InputField>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        print(ScoreManager.Instance.inputField.text);
-        Debug.LogError(ScoreManager.Instance.clearAllInputField.text);
-        Debug.LogWarning(ScoreManager.Instance.clearOneInputField.text);
     }
 }

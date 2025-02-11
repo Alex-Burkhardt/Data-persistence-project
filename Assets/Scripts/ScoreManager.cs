@@ -2,11 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
-using UnityEditor;
-using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 public class ScoreManager : MonoBehaviour
 {
     [Serializable]
@@ -40,7 +37,6 @@ public class ScoreManager : MonoBehaviour
         if (Instance)
         {
             Destroy(gameObject);
-            return;
         }
         
         Instance = this;
@@ -141,7 +137,6 @@ public class ScoreManager : MonoBehaviour
     {
         if (clearOneInputField == null)
         {
-            print("Empty input.");
             return;
         }
 
@@ -160,8 +155,6 @@ public class ScoreManager : MonoBehaviour
                 return;
             }
         }
-
-        print("Name doesn't match.");
     }
 
     public void PlayersSort()

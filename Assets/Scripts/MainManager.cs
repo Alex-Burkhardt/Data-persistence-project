@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,11 +11,10 @@ public class MainManager : MonoBehaviour
     public Text ScoreText;
     public Text nameText;
     public GameObject GameOverText;
+    private bool m_GameOver = false;
     
     private bool m_Started = false;
     private int m_Points;
-    
-    private bool m_GameOver = false;
 
     [SerializeField] private Button restartButton;
     [SerializeField] private Button mainMenuButton;

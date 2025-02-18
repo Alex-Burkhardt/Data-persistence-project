@@ -37,6 +37,7 @@ public class ScoreManager : MonoBehaviour
         if (Instance)
         {
             Destroy(gameObject);
+            return;
         }
         
         Instance = this;
@@ -55,9 +56,7 @@ public class ScoreManager : MonoBehaviour
     
     public void SubmitPlayer()
     {
-
         newPlayerName = inputField.text;
-        print(newPlayerName);
 
         SceneManager.LoadScene(1);
     }

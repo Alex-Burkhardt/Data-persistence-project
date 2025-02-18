@@ -4,22 +4,21 @@ using UnityEngine.UI;
 
 public class Helper : MonoBehaviour
 {
-    public Button playButton;
-    public Button clearOnePath, clearAllPath;
+    public Button clearOnePath, clearAllPath, playButton;
 
-    [SerializeField] private GameObject IFObject;
-    [SerializeField] private GameObject IFClearOneObject;
-    [SerializeField] private GameObject IFClearAllObject;
+    [SerializeField] public GameObject IFObject;
+    [SerializeField] public GameObject IFClearOneObject;
+    [SerializeField] public GameObject IFClearAllObject;
 
     void Start()
     {
-        playButton.onClick.AddListener(ScoreManager.Instance.SubmitPlayer);
         ScoreManager.Instance.inputField = IFObject.GetComponent<TMP_InputField>();
-
-        clearAllPath.onClick.AddListener(ScoreManager.Instance.ClearAllPath);
         ScoreManager.Instance.clearAllInputField = IFClearAllObject.GetComponent<TMP_InputField>();
-
-        clearOnePath.onClick.AddListener(ScoreManager.Instance.ClearOnePath);
         ScoreManager.Instance.clearOneInputField = IFClearOneObject.GetComponent<TMP_InputField>();
+    
+        playButton.onClick.AddListener(ScoreManager.Instance.SubmitPlayer);
+        clearAllPath.onClick.AddListener(ScoreManager.Instance.ClearAllPath);
+        clearOnePath.onClick.AddListener(ScoreManager.Instance.ClearOnePath);
+
     }
 }
